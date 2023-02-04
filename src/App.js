@@ -138,7 +138,7 @@ function App() {
                       delete
                     </button>
                     <button value={item.id} onClick={changeDone}>
-                      confirm
+                      cancel
                     </button>
                   </main>
                 </div>
