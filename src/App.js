@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styles from "./App.module.css";
+import Form from "./components/Form";
+import List from "./components/List";
 
 function App() {
   const [toDo, setTodo] = useState({
@@ -26,8 +28,9 @@ function App() {
 
   // console.log(toDo);
   const onSubmit = (event) => {
+    console.log(toDo);
     event.preventDefault();
-    if (toDo === "") {
+    if (toDo.title === "" || toDo.body === "") {
       return;
     }
 
@@ -52,68 +55,44 @@ function App() {
   };
 
   const deleteDone = (event) => {
-    console.log(typeof event.target.value);
+    // console.log(typeof event.target.value);
     const newtoDos = toDos.filter(
       (item) => item.id !== Number(event.target.value)
     );
     setTodos(newtoDos);
   };
 
-  console.log(toDos);
   return (
     <div className={styles.body}>
+      {/*  Title */}
       <div className={styles.title}>
         <h1>My toDo List ({toDos.length})</h1>
       </div>
-      <form onSubmit={onSubmit} className={styles.forms}>
-        <div className={styles.content}>
-          <label>제목 </label>
-          <input
-            onChange={onChangeTitle}
-            value={toDo.title || ""}
-            type="text"
-            placeholder="Write your to do..."
-          />
-        </div>
-        <div className={styles.content}>
-          <label>내용 </label>
-          <input
-            onChange={onChangeBody}
-            value={toDo.body || ""}
-            type="text"
-            size={50}
-            placeholder="Write your to do..."
-          />
-        </div>
-        <div className={styles.content}>
-          <button>Add To Do</button>
-        </div>
-      </form>
+
+      {/* Input Form*/}
+      <Form
+        handleSubmit={onSubmit}
+        onChangeTitle={onChangeTitle}
+        onChangeBody={onChangeBody}
+        toDo={toDo}
+      />
+
       {/* card */}
       <div name="working">
         <h1>Working...!</h1>
-
         <section className={styles.cardlist}>
           {toDos
             .filter((obj) => !obj.isDone)
             .map((item, index) => {
               let date = new Date();
               return (
-                <div key={item.id} className={styles.card}>
-                  <header>
-                    <h3>{date.toLocaleDateString()}</h3>
-                    <h2>{item.title}</h2>
-                  </header>
-                  <main>
-                    <h3>{item.body}</h3>
-                    <button value={item.id} onClick={deleteDone}>
-                      delete
-                    </button>
-                    <button value={item.id} onClick={changeDone}>
-                      confirm
-                    </button>
-                  </main>
-                </div>
+                <List
+                  key={index}
+                  deleteDone={deleteDone}
+                  changeDone={changeDone}
+                  item={item}
+                  date={date}
+                />
               );
             })}
         </section>
@@ -127,21 +106,13 @@ function App() {
             .map((item, index) => {
               let date = new Date();
               return (
-                <div key={item.id} className={styles.card}>
-                  <header>
-                    <h3>{date.toLocaleDateString()}</h3>
-                    <h2>{item.title}</h2>
-                  </header>
-                  <main>
-                    <h3>{item.body}</h3>
-                    <button value={item.id} onClick={deleteDone}>
-                      delete
-                    </button>
-                    <button value={item.id} onClick={changeDone}>
-                      cancel
-                    </button>
-                  </main>
-                </div>
+                <List
+                  key={index}
+                  deleteDone={deleteDone}
+                  changeDone={changeDone}
+                  item={item}
+                  date={date}
+                />
               );
             })}
         </section>
