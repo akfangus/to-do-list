@@ -1,0 +1,16 @@
+/* card css */
+.cardlist {
+  padding: 2rem;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+.cardlist::-webkit-scrollbar {
+  height: 0.5rem;
+  background-color: #201c29;
+}
+
+.cardlist::-webkit-scrollbar-thumb {
+  background-color: #17141d;
+  border-radius: 10px;
+}
