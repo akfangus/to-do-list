@@ -11,3 +11,8 @@
 1. components/Form - 입력 폼
 2. components/List - 출력 카드 리스트
 
+
+##0209
+1. components/Header - 헤더
+2. components/Card - 카드안에 List를 포함
+
