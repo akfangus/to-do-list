@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import styles from "./App.module.css";
 import Form from "./components/Form";
-import List from "./components/List";
+// import List from "./components/List";
+import Header from "./components/Header";
+import Card from "./components/Card";
 
 function App() {
   const [toDo, setTodo] = useState({
@@ -11,6 +13,12 @@ function App() {
     isDone: false,
   });
   const [toDos, setTodos] = useState([]);
+
+  const toDoNotDone = toDos.filter((v) => !v.isDone);
+  const toDoisDone = toDos.filter((v) => v.isDone);
+
+  console.log(toDoNotDone);
+
   const onChangeTitle = (event) => {
     // console.log(event.target.value);
     setTodo({
@@ -28,12 +36,11 @@ function App() {
 
   // console.log(toDo);
   const onSubmit = (event) => {
-    console.log(toDo);
+    // console.log(toDo);
     event.preventDefault();
-    if (toDo.title === "" || toDo.body === "") {
+    if (!toDo.title || !toDo.body) {
       return;
     }
-
     setTodos((currentArray) => [toDo, ...currentArray]);
     setTodo({
       ...toDo,
@@ -44,31 +51,24 @@ function App() {
     });
   };
 
-  const changeDone = (event) => {
+  const changeDone = (id) => {
     setTodos(
-      toDos.map((item) => {
-        return item.id === Number(event.target.value)
-          ? { ...item, isDone: !item.isDone }
-          : item;
-      })
+      toDos.map((item) =>
+        item.id === id ? { ...item, isDone: !item.isDone } : item
+      )
     );
   };
 
-  const deleteDone = (event) => {
-    // console.log(typeof event.target.value);
-    const newtoDos = toDos.filter(
-      (item) => item.id !== Number(event.target.value)
-    );
+  const deleteDone = (id) => {
+    const newtoDos = toDos.filter((item) => item.id !== id);
+    console.log(newtoDos);
     setTodos(newtoDos);
   };
 
   return (
     <div className={styles.body}>
       {/*  Title */}
-      <div className={styles.title}>
-        <h1>My toDo List ({toDos.length})</h1>
-      </div>
-
+      <Header />
       {/* Input Form*/}
       <Form
         handleSubmit={onSubmit}
@@ -76,47 +76,18 @@ function App() {
         onChangeBody={onChangeBody}
         toDo={toDo}
       />
-
-      {/* card */}
-      <div name="working">
-        <h1>Working...!</h1>
-        <section className={styles.cardlist}>
-          {toDos
-            .filter((obj) => !obj.isDone)
-            .map((item, index) => {
-              let date = new Date();
-              return (
-                <List
-                  key={index}
-                  deleteDone={deleteDone}
-                  changeDone={changeDone}
-                  item={item}
-                  date={date}
-                />
-              );
-            })}
-        </section>
-      </div>
-
-      <div name="done">
-        <h1>Done!</h1>
-        <section className={styles.cardlist}>
-          {toDos
-            .filter((obj) => obj.isDone)
-            .map((item, index) => {
-              let date = new Date();
-              return (
-                <List
-                  key={index}
-                  deleteDone={deleteDone}
-                  changeDone={changeDone}
-                  item={item}
-                  date={date}
-                />
-              );
-            })}
-        </section>
-      </div>
+      <Card
+        toDos={toDoNotDone}
+        title="Working,.,,!"
+        deleteDone={deleteDone}
+        changeDone={changeDone}
+      />
+      <Card
+        toDos={toDoisDone}
+        title="Done....!!!"
+        deleteDone={deleteDone}
+        changeDone={changeDone}
+      />
     </div>
   );
 }

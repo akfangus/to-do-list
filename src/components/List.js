@@ -1,6 +1,7 @@
 import styles from "./List.module.css";
 
 function List(props) {
+  // console.log(props);
   return (
     <div key={props.item.id} className={styles.card}>
       <header>
@@ -9,12 +10,14 @@ function List(props) {
       </header>
       <main>
         <h3>{props.item.body}</h3>
-        <button value={props.item.id} onClick={props.deleteDone}>
-          delete
-        </button>
-        <button value={props.item.id} onClick={props.changeDone}>
-          confirm
-        </button>
+        <div className={styles.buttonss}>
+          <button onClick={() => props.deleteDone(props.item.id)}>
+            delete
+          </button>
+          <button onClick={() => props.changeDone(props.item.id)}>
+            {props.item.isDone ? "cancel" : "confirm"}
+          </button>
+        </div>
       </main>
     </div>
   );

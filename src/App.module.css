@@ -8,28 +8,5 @@
   font-family: "Hi Melody", cursive;
   font-size: 20px;
 }
-.title {
-  color: white;
-  background-color: tomato;
-  border-radius: 10px;
-  text-align: center;
-}
 
 /* form css */
-
-/* card css */
-.cardlist {
-  padding: 2rem;
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-}
-.cardlist::-webkit-scrollbar {
-  height: 0.5rem;
-  background-color: #201c29;
-}
-
-.cardlist::-webkit-scrollbar-thumb {
-  background-color: #17141d;
-  border-radius: 10px;
-}
